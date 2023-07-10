@@ -1,0 +1,22 @@
+def check_consecutive_numbers(lst):
+    for i in range(len(lst) - 2):
+        if lst[i] + 1 == lst[i+1] and lst[i+1] + 1 == lst[i+2]:
+            return True
+    return False
+
+def find_consecutive_numbers_lists(list_of_lists):
+    positions = []
+    for i, lst in enumerate(list_of_lists):
+        if check_consecutive_numbers(lst):
+            positions.append((i, lst))
+    return positions
+
+# Given list of lists
+list_of_lists = [[27,9,2,8,8,9,27,8],[1,18,18,18,19,4,4,1],[1,5,5,5,8,7,4,5],[1,2,3,5,8,4,4,3],[18,27,63,36,27,27,27,1,5],[3,5,8,4,4,4,2,15,15,151]]
+
+# Find the positions and lists with three consecutive numbers
+consecutive_positions = find_consecutive_numbers_lists(list_of_lists)
+
+# Print the positions and corresponding lists
+for position, lst in consecutive_positions:
+    print(f"List at position {position}: {lst}")

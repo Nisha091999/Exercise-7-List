@@ -1,44 +1,68 @@
-def check_consecutive_numbers(lst):
-    for i in range(len(lst) - 2):
-        if lst[i] + 1 == lst[i+1] and lst[i+1] + 1 == lst[i+2]:
-            return True
-    return False
-This is a function definition named check_consecutive_numbers that takes a list lst as an argument.
-The function iterates over the indices of the list lst using the range(len(lst) - 2) expression. 
-The -2 ensures that we don't go out of bounds while comparing consecutive elements.
-Inside the loop, it checks if the current element lst[i] plus 1 is equal to the next element lst[i+1], and 
-if the next element plus 1 is equal to the element after that (lst[i+2]).
-If the condition is true for any triplet of consecutive numbers, it returns True.
-If the loop completes without finding any consecutive numbers, it returns False.
+class ConsecutiveNumbersChecker:
+This line starts the definition of a class named ConsecutiveNumbersChecker.
 
 
-def find_consecutive_numbers_lists(list_of_lists):
-    positions = []
-    for i, lst in enumerate(list_of_lists):
-        if check_consecutive_numbers(lst):
-            positions.append((i, lst))
-    return positions
-This is another function definition named find_consecutive_numbers_lists that takes a list of lists list_of_lists as an argument.
-It initializes an empty list called positions to store the positions and corresponding lists with three consecutive numbers.
-It iterates over the list_of_lists using the enumerate function, which provides both the index i and the list lst.
-For each list lst, it calls the check_consecutive_numbers function to determine if it contains three consecutive numbers.
-If the condition is true, it appends a tuple (i, lst) to the positions list, representing the position and the corresponding list.
-Finally, it returns the positions list.
+    def __init__(self, lists):
+        self.lists = lists
+This is the constructor method (__init__) of the class. 
+It takes a parameter lists and initializes an instance variable self.lists with the value of lists.
+This allows us to pass a list of lists to the class when creating an instance.
 
 
-list_of_lists = [[27,9,2,8,8,9,27,8],[1,18,18,18,19,4,4,1],[1,5,5,5,8,7,4,5],[1,2,3,5,8,4,4,3],[18,27,63,36,27,27,27,1,5],[3,5,8,4,4,4,2,15,15,151]]
-This line defines a variable named list_of_lists and assigns it a list of lists. Each inner list represents a sequence of numbers.
-python
-Copy code
-consecutive_positions = find_consecutive_numbers_lists(list_of_lists)
-This line calls the find_consecutive_numbers_lists function with the list_of_lists as an argument and 
-assigns the result to the variable consecutive_positions.
-The variable consecutive_positions will contain the positions and corresponding lists that have three consecutive numbers.
+    def check_consecutive_numbers(self):
+This is a method defined within the class named check_consecutive_numbers. 
+It doesn't take any parameters other than self, which is a reference to the instance of the class.
 
 
-for position, lst in consecutive_positions:
-    print(f"List at position {position}: {lst}")
-This is a for loop that iterates over each tuple (position, lst) in the consecutive_positions list.
-For each tuple, it prints a formatted string that displays the position and the corresponding list.
-So, when you run this code, it will find and print the positions and
-lists that contain three consecutive numbers from the given list_of_lists
+        for i, sublist in enumerate(self.lists):
+This line starts a for loop that iterates over each sublist within the self.lists list. 
+The enumerate function is used to get both the index (i) and the sublist itself (sublist) at each iteration.
+
+
+            for j in range(len(sublist) - 2):
+This line starts another for loop that iterates over the indices of each element in the sublist, 
+except for the last two elements. It uses the range function to generate a sequence of indices,
+starting from 0 and ending at len(sublist) - 3. The -2 is used because we need to access sublist[j + 2] inside the loop,
+so we want to stop iterating two indices before the end.
+
+
+                if sublist[j] + 1 == sublist[j + 1] and sublist[j + 1] + 1 == sublist[j + 2]:
+This line checks if three consecutive elements in the sublist satisfy the condition sublist[j] + 1 == sublist[j + 1] 
+(the first two elements are consecutive) and sublist[j + 1] + 1 == sublist[j + 2] (the last two elements are consecutive).
+
+
+                    return i
+If three consecutive elements are found, the current index i is returned as the result and the execution of the method terminates.
+
+
+        return -1
+If no three consecutive elements are found in any sublist, -1 is returned as the result.
+
+
+lists = [[27, 9, 2, 8, 8, 9, 27, 8], [1, 18, 18, 18, 19, 4, 4, 1], [1, 5, 5, 5, 8, 7, 4, 5], [1, 2, 3, 5, 8, 4, 4, 3],
+         [18, 27, 63, 36, 27, 27, 27, 1, 5], [3, 5, 8, 4, 4, 4, 2, 15, 15, 151]]
+This line defines the lists variable and assigns it a list of lists. 
+These are the input lists on which we want to check for three consecutive numbers.
+
+
+checker = ConsecutiveNumbersChecker(lists)
+Here, an instance of the ConsecutiveNumbersChecker class is created by calling its constructor with the lists variable as the argument.
+This creates an object named checker that can perform the consecutive number checking.
+
+
+result = checker.check_consecutive_numbers()
+The check_consecutive_numbers method is called on the checker object, 
+and the return value is stored in the result variable. 
+It will contain either the index of the first sublist with three consecutive numbers or -1 if no such sublist is found.
+
+
+if result != -1:
+    print("List containing three consecutive numbers found at position:", result)
+    sublist = lists[result]
+    print("List:", sublist)
+else:
+    print("No list contains three consecutive numbers.")
+Finally, this code block checks the value of result and prints the appropriate 
+message based on whether a sublist with three consecutive numbers is found or not. 
+If a sublist is found, it prints the position/index of the sublist and the sublist itself. 
+Otherwise, it prints a message indicating that no sublist contains three consecutive numbers.

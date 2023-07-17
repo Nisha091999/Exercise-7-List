@@ -1,0 +1,24 @@
+class ConsecutiveNumbersChecker:
+    def __init__(self, lists):
+        self.lists = lists
+
+    def check_consecutive_numbers(self):
+        for i, sublist in enumerate(self.lists):
+            for j in range(len(sublist) - 2):
+                if sublist[j] + 1 == sublist[j + 1] and sublist[j + 1] + 1 == sublist[j + 2]:
+                    return i
+        return -1
+
+
+lists = [[27, 9, 2, 8, 8, 9, 27, 8], [1, 18, 18, 18, 19, 4, 4, 1], [1, 5, 5, 5, 8, 7, 4, 5], [1, 2, 3, 5, 8, 4, 4, 3],
+         [18, 27, 63, 36, 27, 27, 27, 1, 5], [3, 5, 8, 4, 4, 4, 2, 15, 15, 151]]
+
+checker = ConsecutiveNumbersChecker(lists)
+result = checker.check_consecutive_numbers()
+
+if result != -1:
+    print("List containing three consecutive numbers found at position:", result)
+    sublist = lists[result]
+    print("List:", sublist)
+else:
+    print("No list contains three consecutive numbers.")
